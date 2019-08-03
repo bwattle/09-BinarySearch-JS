@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Binary Search</title>
+    <meta charset="utf-8" />
+    <script type='text/javascript'>        
+        var arrTest = new Array(1, 2, 2, 3, 4, 6, 11, 32, 75, 501, 4231, 4500, 30000);
+        function arrView() {
+            document.getElementById('txtarrTestAll').value = arrTest
+        }
+        function searchLinear() {
+            var arrNo = 0;
+            var found = false;  //declares "found" as a boolean, initially false
+            var findItem = document.getElementById('txtNameToFind').value   //created as a variable
+            var i = 0;          //declares the increment "i" as an integer, initially 0
+            for (i; i < arrTest.length; i++) {
+                if (arrTest[i] == findItem) {
+                    found = true;
+                    arrNo = i;
+                }
+            }
+            document.getElementById('txtArrLength').value = "The array has " + arrTest.length + " elements.";
+            document.getElementById('txtSearchResult').value = (arrTest[arrNo]) + " is element # " + arrNo;
+            document.getElementById('txtFound').value = found;
+        }
+        function searchBinary() {
+            var low = 1;                //sets "low" to integer 1
+            var middle = 0;             //sets "middle" to integer 0
+            var high = arrTest.length;  //sets "high" to the number of items in the list
+            var found = false;          //declares "found" as a boolean, initially false
+            var foundTxt = "";          //declare "foundTxt" as a string, initially empty
+            var findItem = document.getElementById('txtNameToFind').value   //created as a variable
+            var arrNo = 0;              // sets the element No
+            var i = 0;    //declares the increment "i" as an integer, initially 0
+            while (high >= low && found == false) {      //rounding: https://www.w3schools.com/js/js_comparisons.asp
+                middle = (high + low) / 2  //calculate the middle term number
+                 //middle = Math.round((high + low) / 2)   //calculate the middle term number
+               if (findItem < arrTest[middle]) {        //If statements: https://www.w3schools.com/js/js_if_else.asp
+                    high = middle - 1;
+                } else if (findItem == arrTest[middle]) {
+                    found = true;
+                } else {
+                    low = middle + 1
+                }
+            }
+            if (found == true) {
+                foundTxt = "Found"
+            } else {
+                foundTxt = "Not Found"
+            }
+            document.getElementById('txtArrLength').value = "The array has " + arrTest.length + " elements.";
+            document.getElementById('txtSearchResult').value = "The value before " + findItem + " is " + arrTest[middle];
+            document.getElementById('txtFound').value = foundTxt;
+        }
+    </script>
+</head>
+<body onload="arrView()">
+    <form id="input">
+        <h1>Binary Search</h1>
+        <h2>Scores must be in "ascending" order</h2>
+        Here is a hard coded sample array:<br />
+        <textarea id="txtarrTestAll" rows="4" cols="35"></textarea><br />
+        <br />
+        Item to search for:<br />
+        <textarea id="txtNameToFind" rows="1" cols="35" name="S1"></textarea><br />
+        <br />
+        <br />
+        <input id="btnFind" type="Button" value="Search Linear" onclick="searchLinear()" />
+        <input id="btnFindMin" type="Button" value="Search Binary" onclick="searchBinary()" /><br />
+        <textarea id="txtArrLength" rows="1" cols="35"></textarea><br />
+        <br />
+        The item you are looking for:<br />
+        <textarea id="txtFound" cols="35" name="S2" rows="1"></textarea><br />
+        <br />
+        The element you are looking for is:<br />
+        <textarea id="txtSearchResult" rows="1" cols="35"></textarea><br />
+    </form>
+</body>
+</html>
